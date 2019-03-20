@@ -149,7 +149,11 @@ export default class BottomDrawer extends Component{
     Animated.spring(this.position, {
       toValue: position
     }).start();
-    this.setState({ currentPosition: position });
+
+    this.setState({ currentPosition: position }, ()=>
+      this.props.onPositionChanged &&
+        this.props.onPositionChanged({isExpanded: position === this.UP_POSITION})
+    );
   }
 
   resetPosition() {
