@@ -94,6 +94,30 @@ export default class BottomDrawer extends Component{
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.containerHeight !== prevProps.containerHeight) {
+      /**
+       * TOGGLE_THRESHOLD is how much the user has to swipe the drawer
+       * before its position changes between up / down.
+       */
+      this.TOGGLE_THRESHOLD = this.props.containerHeight / 11;
+      this.DOWN_DISPLAY =
+        this.props.downDisplay || this.props.containerHeight / 1.5;
+
+      /**
+       * UP_POSITION and DOWN_POSITION calculate the two (x,y) values for when
+       * the drawer is swiped into up position and down position.
+       */
+      this.UP_POSITION = {
+        x: 0,
+        y: SCREEN_HEIGHT - (this.props.containerHeight + this.props.offset)
+      };
+      this.DOWN_POSITION = {
+        x: 0,
+        y: this.UP_POSITION.y + this.DOWN_DISPLAY
+      };
+    }
+  }
   render() {
     const children = this.props.children instanceof Function ? this.props.children({animatedValue: this.position}): this.props.children;
     return (
