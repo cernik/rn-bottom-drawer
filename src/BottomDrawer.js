@@ -94,9 +94,10 @@ export default class BottomDrawer extends Component{
     });
   }
 
-  render() {   
+  render() {
+    const children = this.props.children instanceof Function ? this.props.children({animatedValue: this.position}): this.props.children;
     return (
-      <Animated.View 
+      <Animated.View
         style={[
           {...this.position.getLayout(), left: 0 },
           styles.animationContainer,
@@ -108,8 +109,7 @@ export default class BottomDrawer extends Component{
         ]}
         {...this._panResponder.panHandlers}
       >
-        {this.props.children}
-
+        {children}
         <View style={{height: Math.sqrt(SCREEN_HEIGHT), backgroundColor: this.props.backgroundColor}} />
       </Animated.View>
     )
