@@ -119,8 +119,8 @@ export default class BottomDrawer extends Component{
         x: 0,
         y: this.UP_POSITION.y + this.DOWN_DISPLAY
       };
-      if (shouldResetPosition) {
-        this.resetPosition(this.UP_POSITION);
+      if ( shouldResetPosition ){
+        this.transitionTo(this.UP_POSITION);
       }
     }
   }
