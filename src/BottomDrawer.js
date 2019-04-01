@@ -104,6 +104,8 @@ export default class BottomDrawer extends Component{
       this.DOWN_DISPLAY =
         this.props.downDisplay || this.props.containerHeight / 1.5;
 
+      const shouldResetPosition =
+        this.state.currentPosition === this.UP_POSITION;
       /**
        * UP_POSITION and DOWN_POSITION calculate the two (x,y) values for when
        * the drawer is swiped into up position and down position.
@@ -112,10 +114,14 @@ export default class BottomDrawer extends Component{
         x: 0,
         y: SCREEN_HEIGHT - (this.props.containerHeight + this.props.offset)
       };
+
       this.DOWN_POSITION = {
         x: 0,
         y: this.UP_POSITION.y + this.DOWN_DISPLAY
       };
+      if (shouldResetPosition) {
+        this.resetPosition(this.UP_POSITION);
+      }
     }
   }
   render() {
@@ -180,9 +186,9 @@ export default class BottomDrawer extends Component{
     );
   }
 
-  resetPosition() {
+  resetPosition(position) {
     Animated.spring(this.position, {
-      toValue: this.state.currentPosition
+      toValue: position || this.state.currentPosition
     }).start();
   }
 }
